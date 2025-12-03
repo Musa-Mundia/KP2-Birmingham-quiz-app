@@ -1,0 +1,102 @@
+.quiz-container {
+  /* variable width: grows with viewport but constrained */
+  width: clamp(320px, 60%, 1100px);
+  margin: 24px auto;
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* always stacked layout */
+.content {
+  display: flex;
+  flex-direction: column; /* stacked on all screens */
+  gap: 14px;
+  align-items: stretch;
+  font-size: 27px;
+  font-weight: 500;
+}
+
+/* full width child boxes so they follow container width */
+.question-box {
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid #e6e9ee;
+}
+
+/* list styling */
+.Questions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.Questions ul li{
+  display: flex;
+  align-items: center;
+  height: 70px;
+  padding-left: 15px;
+  border: 1px solid #686868;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  background: white;
+  cursor: pointer;
+}
+
+.Questions li {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+
+/* correct / wrong visual feedback */
+.Questions li.correct {
+  background: #e6f4ea;
+  color: #0b5d2b;
+  border-left: 4px solid #28a745;
+}
+
+.Questions li.wrong {
+  background: #fde7e9;
+  color: #7a1a22;
+  border-left: 4px solid #dc3545;
+}
+
+/* optional: emphasize the verse part when revealed (parenthesis remain part of text) */
+.Questions li.correct,
+.Questions li.wrong {
+  font-weight: 600;
+}
+
+.quiz-container button{
+  margin: auto;
+  width: 250px;
+  height: 65px;
+  background: #e0c428d7;
+  color:#fff;
+  font-size: 25px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.quiz-container .index{
+  margin: auto;
+  font-size: 18px;
+  color: #fff;
+}
+
+.correct{
+  background-color: #dffff2;
+  border-color: #00d397;
+}
+
+.wrong{
+  background-color: #FFEBEB;
+  border-color: #FF4A4A;
+}
