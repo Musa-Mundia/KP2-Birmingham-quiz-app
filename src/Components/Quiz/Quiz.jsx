@@ -3,11 +3,12 @@ import './Quiz.css'
 import { questions } from '../../assets/data'
 
 const Quiz = () => {
-  let [index, setIndex] = useState(0)
-  let [revealed, setRevealed] = useState([])
-  let [selectedOpt, setSelectedOpt] = useState(null)
-  let [selectedCorrect, setSelectedCorrect] = useState(null)
-  let [lock, setLock] = useState(false)
+  let [index, setIndex] = useState(0);
+  let [revealed, setRevealed] = useState([]);
+  let [selectedOpt, setSelectedOpt] = useState(null);
+  let [selectedCorrect, setSelectedCorrect] = useState(null);
+  let [lock, setLock] = useState(false);
+  let [score,setScore] = useState(0);
 
   // Move this AFTER state declarations so it updates when index changes
   const question = questions[index]
