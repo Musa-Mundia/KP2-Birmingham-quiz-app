@@ -21,7 +21,7 @@ export const questions = [
     id: 3,
     text: "Who suggested that Joseph interpret the dreams of Pharaoh?",
     option1: "A. Potiphar",
-    option2: "B. The cupbearer (Gen 41:12–13)",
+    option2: "B. The cupbearer (Gen 41:12,13)",
     option3: "C. Judah",
     option4: "D. The baker",
     answer: "B"
@@ -173,7 +173,7 @@ export const questions = [
   {
     id: 20,
     text: "When was the Sabbath first instituted, and by whom was it observed?",
-    option1: "A. By God, after creation (Gen 2:2–3)",
+    option1: "A. By God, after creation (Gen 2:2,3)",
     option2: "B. By Noah, after the flood",
     option3: "C. By Adam, in the garden of Eden",
     option4: "D. By Moses, at the giving of the ten commandments",

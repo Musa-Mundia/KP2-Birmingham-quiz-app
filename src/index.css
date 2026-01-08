@@ -1,10 +1,18 @@
-*{
-  margin: 0;
-  padding: 0;
+@import "tailwindcss";
+
+* {
+  
+  box-sizing: border-box;
 }
 
-body{
+body {
   height: 100vh;
-  background-color: #9e27e9;
   font-family: 'poppins';
+  background-color: #9e27e9;
 }
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
