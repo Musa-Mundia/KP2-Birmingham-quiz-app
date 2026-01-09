@@ -239,7 +239,7 @@ const Quiz = ({ userName, onLogout }) => {
     }
     
     try {
-      await axios.post('http://localhost:5000/api/scores', {
+      await axios.post('/api/scores', {
         userId: userName,
         difficulty: currentDifficulty,
         score: finalScore,

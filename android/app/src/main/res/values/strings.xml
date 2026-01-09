@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">KP2 Birmingham Quiz</string>
+    <string name="title_activity_main">KP2 Birmingham Quiz</string>
+    <string name="package_name">com.kp2.birmingham</string>
+    <string name="custom_url_scheme">com.kp2.birmingham</string>
+</resources>

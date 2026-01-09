@@ -23,7 +23,7 @@ function LoginPage({ onLogin })  {
 
         try{
             console.log('Attempting login with:', { userId: userName, password });
-            const res = await axios.post("http://localhost:5000/api/login",{
+            const res = await axios.post("/api/login",{
                 userId: userName,
                 password: password
             })
@@ -41,7 +41,7 @@ function LoginPage({ onLogin })  {
             if (e.response?.data?.message) {
                 setError(e.response.data.message);
             } else if (e.code === 'ERR_NETWORK') {
-                setError("Cannot connect to server. Make sure the backend is running on port 5000");
+                setError("Cannot connect to server. Please try again later.");
             } else {
                 setError("Login failed. Please try again.")
             }

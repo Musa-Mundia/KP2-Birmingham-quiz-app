@@ -24,13 +24,13 @@ export default function Scoreboard() {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get(`http://localhost:5000/api/scoreboard?difficulty=${selectedDifficulty}`);
+      const response = await axios.get(`/api/scoreboard?difficulty=${selectedDifficulty}`);
       if (response.data.success) {
         setScores(response.data.scores);
       }
     } catch (e) {
       console.error('Error fetching scores:', e);
-      setError('Failed to load scoreboard. Make sure the server is running.');
+      setError('Failed to load scoreboard. Please try again later.');
     } finally {
       setLoading(false);
     }
