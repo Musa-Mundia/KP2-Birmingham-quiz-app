@@ -123,8 +123,29 @@ const Quiz = ({ userName, onLogout }) => {
     setTimeLeft(config.timePerQuestion);
   }, [index]);
 
+  // Debug logging
+  console.log('Quiz Debug:', { 
+    difficulty, 
+    currentDifficulty, 
+    questionsLength: quizQuestions.length, 
+    index,
+    question: quizQuestions[index]
+  });
+
   const question = quizQuestions[index]
-  if (!question) return <div className="quiz-container">Loading...</div>
+  if (!question) {
+    return (
+      <div className="quiz-container">
+        <div style={{ color: 'white', textAlign: 'center', padding: '50px' }}>
+          <h2>Loading Quiz...</h2>
+          <p>Difficulty: {currentDifficulty}</p>
+          <p>Questions loaded: {quizQuestions.length}</p>
+          <p>Current index: {index}</p>
+          {quizQuestions.length === 0 && <p style={{color: 'yellow'}}>No questions found for this difficulty!</p>}
+        </div>
+      </div>
+    )
+  }
 
   // Check if question uses new format (options array) or old format (option1, option2, etc.)
   const isNewFormat = Array.isArray(question.options)
@@ -289,7 +310,7 @@ const Quiz = ({ userName, onLogout }) => {
   
   // Calculate circular progress bar - starts full and decreases clockwise
   const totalTime = config.timePerQuestion;
-  const progress = (Totaltime / timeLeft) * 100;  // Inverted: full at start, empty at end
+  const progress = (timeLeft / totalTime) * 100;  // Inverted: full at start, empty at end
   const radius = 55;  
   const circumference = 2 * Math.PI * radius; 
   const strokeDashoffset = circumference - (progress / 100) * circumference;
@@ -350,7 +371,7 @@ const Quiz = ({ userName, onLogout }) => {
                 strokeDasharray={circumference}
                 strokeDashoffset={strokeDashoffset}
                 strokeLinecap="round"
-                style={{ transition: 'stroke-dashoffset 0.1s linear', transform: 'rotate(-90deg) scaleX(-1)', transformOrigin: '65px 65px' }}
+                style={{ transition: 'stroke-dashoffset 0.1s linear', transform: 'rotate(+90deg) scaleX(-1)', transformOrigin: '65px 65px' }}
               />
               <text x="65" y="75" textAnchor="middle" fontSize="32" fontWeight="bold" fill={timeLeft <= 5 ? '#ff4444' : timeLeft <= 12 ? '#ffaa00' : '#333'}>
                 {timeLeft}s
