@@ -1,0 +1,7 @@
+server/
+android/
+node_modules/
+.git/
+.env
+config.env
+*.log

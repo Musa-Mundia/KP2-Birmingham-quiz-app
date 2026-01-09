@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "node server/server.cjs",
-    "start": "concurrently \"npm run server\" \"vite\""
+    "start": "npm run build"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.0",
