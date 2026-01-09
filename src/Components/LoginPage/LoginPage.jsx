@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios"
+import { API_URL } from '../../config'
 import './LoginPage.css'
 
 function LoginPage({ onLogin })  {
@@ -23,7 +24,7 @@ function LoginPage({ onLogin })  {
 
         try{
             console.log('Attempting login with:', { userId: userName, password });
-            const res = await axios.post("/api/login",{
+            const res = await axios.post(`${API_URL}/api/login`,{
                 userId: userName,
                 password: password
             })

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import axios from 'axios'
+import { API_URL } from '../../config'
 import './Quiz.css'
 import { questions as easyQuestions } from '../../assets/data(bible-quesitons)'
 import { mediumQuestions } from '../../assets/data(Church-History)'
@@ -239,7 +240,7 @@ const Quiz = ({ userName, onLogout }) => {
     }
     
     try {
-      await axios.post('/api/scores', {
+      await axios.post(`${API_URL}/api/scores`, {
         userId: userName,
         difficulty: currentDifficulty,
         score: finalScore,

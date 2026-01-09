@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from '../../config';
 
 export default function Scoreboard() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function Scoreboard() {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.get(`/api/scoreboard?difficulty=${selectedDifficulty}`);
+      const response = await axios.get(`${API_URL}/api/scoreboard?difficulty=${selectedDifficulty}`);
       if (response.data.success) {
         setScores(response.data.scores);
       }
