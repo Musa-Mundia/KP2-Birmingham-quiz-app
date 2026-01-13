@@ -106,7 +106,6 @@ export default function LandingPage() {
 
         {/* Buttons */}
         <div className="flex flex-col gap-3 sm:gap-4">
-          {/* Start Button */}
           <button
             onClick={handleStart}
             className="w-full bg-yellow-500 hover:bg-yellow-600 
@@ -116,7 +115,6 @@ export default function LandingPage() {
             Start Your Journey
           </button>
 
-          {/* Exit Button */}
           <button
             onClick={handleExit}
             className="w-full bg-gray-500 hover:bg-gray-600 

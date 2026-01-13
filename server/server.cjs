@@ -16,7 +16,7 @@ const client = new MongoClient(Db);
 
 let db;
 
-// Connect to MongoDB
+
 async function connectDB() {
   try {
     await client.connect();
@@ -68,7 +68,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(400).json({ success: false, message: 'User ID and password required' });
     }
 
-    // Find user in database
     const usersCollection = db.collection('users');
     const user = await usersCollection.findOne({ userId });
 
@@ -83,7 +82,6 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ success: false, message: 'Invalid user ID or password' });
     }
 
-    // Successful login
     res.json({ success: true, message: 'Login successful', userId: user.userId });
   } catch (e) {
     console.error('Login error:', e);
@@ -106,7 +104,6 @@ app.post('/api/scores', async (req, res) => {
     const existingScore = await scoresCollection.findOne({ userId, difficulty });
     
     if (existingScore) {
-      // Update only if new score is higher
       if (score > existingScore.score) {
         await scoresCollection.updateOne(
           { userId, difficulty },
@@ -120,7 +117,6 @@ app.post('/api/scores', async (req, res) => {
         );
       }
     } else {
-      // Insert new score
       await scoresCollection.insertOne({
         userId,
         difficulty,

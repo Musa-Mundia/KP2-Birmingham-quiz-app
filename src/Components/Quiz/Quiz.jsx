@@ -103,10 +103,10 @@ const Quiz = ({ userName, onLogout }) => {
 
   // Timer effect
   useEffect(() => {
-    if (result || lock) return; // Don't run timer if quiz is done or answer is locked
+    if (result || lock) return; 
     
     if (timeLeft <= 0) {
-      // Time's up - auto move to next question
+      // Time's up move to next question
       handleNext();
       return;
     }
@@ -147,10 +147,10 @@ const Quiz = ({ userName, onLogout }) => {
     )
   }
 
-  // Check if question uses new format (options array) or old format (option1, option2, etc.)
+ 
   const isNewFormat = Array.isArray(question.options)
 
-  // Get the question text (handles both formats)
+  
   const getQuestionText = () => {
     return question.text || question.question
   }
@@ -162,7 +162,7 @@ const Quiz = ({ userName, onLogout }) => {
       const idx = question.options.findIndex(opt => opt === question.correctAnswer)
       return idx >= 0 ? idx + 1 : null
     }
-    // Old format: A, B, C, D
+   
     const answer = question.answer
     if (answer === 'A') return 1
     if (answer === 'B') return 2
@@ -176,11 +176,11 @@ const Quiz = ({ userName, onLogout }) => {
   // Hide scripture references (text in parentheses) until answer is revealed
   const hideScriptureReferences = (text) => {
     if (!text) return ''
-    // Remove text in parentheses like (Gen 7:12) or (1 Sam 22:1)
+    // Early issue where scripture would show regardless using '' Removed it
     return text.replace(/\s*\([^)]*\)/g, '')
   }
 
-  // Display the full option text (handles both formats)
+  
   // Scripture references are hidden until the answer is locked/revealed
   const displayOptionText = (optNum) => {
     let optionText = ''
@@ -245,7 +245,7 @@ const Quiz = ({ userName, onLogout }) => {
     }
   }, [timeLeft, lock, selectedOpt]);
 
-  // Play warning sound when 5 seconds remain
+  // Potential function not emplemented yet as suitable sound is yet to be selected.
   useEffect(() => {
     if (timeLeft === 5 && !result) {
       const audio = new Audio('/warning-sound.mp3');

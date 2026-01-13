@@ -1,0 +1,67 @@
+kp2-birmingham-quiz-app/
+│
+├── ANDROID (Capacitor Mobile App)
+│   └── android/
+│       ├── app/                        # Main Android application
+│       │   ├── src/                    # Android source code
+│       │   └── build.gradle            # App-level build configuration
+│       ├── capacitor-cordova-android-plugins/  # Cordova plugin bridge
+│       └── gradle/                     # Gradle wrapper files
+│
+├──  API (Serverless Functions - Vercel)
+│   └── api/
+│       ├── login.js                    # Authentication endpoint
+│       ├── scoreboard.js               # Scoreboard data endpoint
+│       ├── scores.js                   # Score submission endpoint
+│       └── lib/
+│           └── mongodb.js              # MongoDB connection utility
+│
+├──  SERVER (Backend - Node.js)
+│   └── server/
+│       ├── server.cjs                  # Express server
+│       ├── Connect.cjs                 # Database connection
+│       └── config.env                  # Environment variables
+│
+├──  FRONTEND (React + Vite)
+│   └── src/
+│       ├── main.jsx                    # Application entry point
+│       ├── App.jsx                     # Root component
+│       ├── index.css                   # Global styles
+│       ├── config.js                   # Frontend configuration
+│       │
+│       ├── assets/                     # Static assets and data
+│       │   ├── data(bible-quesitons).jsx    # Bible quiz questions
+│       │   ├── data(Church-History).jsx     # Church history questions
+│       │   └── data(K-questions).jsx        # Kharis related questions
+│       │
+│       └── Components/                 # React components
+│           ├── DifficultySelection/
+│           │   └── DiffSelect.jsx      # Difficulty selector
+│           ├── LandingPage/
+│           │   └── LandingPage.jsx     # Home/landing page
+│           ├── LoginPage/
+│           │   ├── LoginPage.jsx       # Login component
+│           │   └── LoginPage.css       # Login styles
+│           ├── Quiz/
+│           │   ├── Quiz.jsx            # Quiz game component
+│           │   └── Quiz.css            # Quiz styles
+│           └── Scoreboard/
+│               └── Scoreboard.jsx      # Leaderboard component
+│
+├── PUBLIC ASSETS
+│   └── public/                         # Static files served directly
+│
+├── ⚙️ CONFIGURATION FILES (Root)
+│   ├── package.json                    # Node.js dependencies & scripts
+│   ├── vite.config.js                  # Vite build configuration
+│   ├── capacitor.config.json           # Capacitor mobile app config
+│   ├── tailwind.config.js              # Tailwind CSS configuration
+│   ├── postcss.config.js               # PostCSS configuration
+│   ├── eslint.config.js                # ESLint linting rules
+│   ├── vercel.json                     # Vercel deployment config
+│   ├── index.html                      # HTML entry point
+│   └── README.md                       # Project documentation
+│
+└── BUILD SCRIPTS
+    ├── new.sh                          # Build/deployment script
+    └── new2.sh                         # Build/deployment script

@@ -35,8 +35,8 @@ export default function DifficultySelection({ userName }) {
     // Check if there's a saved quiz progress for this difficulty
     const savedProgress = localStorage.getItem(`quiz_progress_${difficulty}`);
     
-    if (savedProgress) {
-      // Ask user if they want to resume or start new
+    if (savedProgress) {// Resume quiz or start new
+      
       const resume = window.confirm(
         'You have an unfinished quiz. Would you like to resume? Click OK to resume or Cancel to start fresh.'
       );
@@ -55,7 +55,6 @@ export default function DifficultySelection({ userName }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 flex flex-col items-center justify-center p-8">
-      {/* Header */}
       <div className="text-center mb-12">
         <h1 className="text-5xl font-bold text-white mb-4">Select Difficulty</h1>
         <p className="text-xl text-purple-200">Choose your challenge level</p>
@@ -83,7 +82,7 @@ export default function DifficultySelection({ userName }) {
         ))}
       </div>
 
-      {/* Navigation Buttons */}
+      
       <div className="flex flex-wrap gap-4 justify-center">
         <button
           onClick={() => navigate('/scoreboard')}
