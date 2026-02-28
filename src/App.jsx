@@ -9,10 +9,12 @@ import Scoreboard from './Components/Scoreboard/Scoreboard'
 
 function App() {
   const [userName, setUserName] = useState('')
+  const [userRole, setUserRole] = useState('member')
 
   // callback to handle login from LoginPage
-  const handleLogin = (name) => {
+  const handleLogin = (name, role) => {
     setUserName(name)
+    setUserRole(role || 'member')
   }
 
   return (
@@ -20,9 +22,9 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-        <Route path="/difficulty" element={<DiffSelect userName={userName} />} />
-        <Route path="/quiz/:difficulty" element={<Quiz userName={userName} />} />
-        <Route path="/quiz" element={<Quiz userName={userName} />} />
+        <Route path="/difficulty" element={<DiffSelect userName={userName} userRole={userRole} />} />
+        <Route path="/quiz/:difficulty" element={<Quiz userName={userName} userRole={userRole} />} />
+        <Route path="/quiz" element={<Quiz userName={userName} userRole={userRole} />} />
         <Route path="/scoreboard" element={<Scoreboard />} />
       </Routes>
     </BrowserRouter>

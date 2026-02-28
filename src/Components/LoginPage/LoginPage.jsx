@@ -31,8 +31,9 @@ function LoginPage({ onLogin })  {
             
             console.log('Login response:', res.data);
             if(res.data.success){
-                if (onLogin) onLogin(userName);
-                navigate("/difficulty",{state:{userName:userName}})
+                const role = res.data.role || 'member';
+                if (onLogin) onLogin(userName, role);
+                navigate("/difficulty",{state:{userName:userName, userRole: role}})
             } else {
                 setError(res.data.message || "Login failed");
             }

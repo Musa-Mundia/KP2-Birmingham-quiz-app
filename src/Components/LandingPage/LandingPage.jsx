@@ -100,7 +100,7 @@ export default function LandingPage() {
             KP2 Birmingham
           </h2>
           <h3 className="text-lg sm:text-xl font-semibold text-gray-800 text-center">
-            Leadership Competency Quiz
+            Church Quiz!!
           </h3>
         </div>
 

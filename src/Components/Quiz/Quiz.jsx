@@ -6,38 +6,121 @@ import './Quiz.css'
 import { questions as easyQuestions } from '../../assets/data(bible-quesitons)'
 import { mediumQuestions } from '../../assets/data(Church-History)'
 import { hardQuestions } from '../../assets/data(K-questions)'
+import { leaderModeQuestions } from '../../assets/data(Leader-Mode)'
 
 // Imports and state variable section
 
-const Quiz = ({ userName, onLogout }) => {
+const Quiz = ({ userName, userRole, onLogout }) => {
   const navigate = useNavigate()
   const { difficulty } = useParams()
   const location = useLocation()
+  const role = userRole || location.state?.userRole || 'member'
+  const leaderAllowedModes = ['leader', 'hard', 'mentor']
 
   // Difficulty configurations
   const difficultyConfig = {
     easy: { questionCount: 20, timePerQuestion: 25 },
     medium: { questionCount: 20, timePerQuestion: 20 },
-    hard: { questionCount: 20, timePerQuestion: 15 }
+    hard: { questionCount: 20, timePerQuestion: 15 },
+    leader: { questionCount: 15, timePerQuestion: 15 },
+    mentor: { questionCount: 30, timePerQuestion: 10 }
   }
 
   const config = difficultyConfig[difficulty] || difficultyConfig.easy
   const currentDifficulty = difficulty || 'easy'
 
-  // Select questions based on difficulty
-  const getQuestionsForDifficulty = () => {
-    switch (currentDifficulty) {
-      case 'medium':
-        return mediumQuestions.slice(0, Math.min(config.questionCount, mediumQuestions.length))
-      case 'hard':
-        return hardQuestions.slice(0, Math.min(config.questionCount, hardQuestions.length))
-      case 'easy':
-      default:
-        return easyQuestions.slice(0, Math.min(config.questionCount, easyQuestions.length))
+  useEffect(() => {
+    if (role === 'leader' && !leaderAllowedModes.includes(currentDifficulty)) {
+      navigate('/difficulty')
     }
+  }, [role, currentDifficulty, navigate])
+
+  // Shuffle helper: returns a new array with elements in random order
+  const shuffleArray = (arr) => {
+    const shuffled = [...arr]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    return shuffled
   }
 
-  const quizQuestions = getQuestionsForDifficulty()
+  // Pick n random items from an array
+  const pickRandom = (arr, n) => {
+    return shuffleArray(arr).slice(0, Math.min(n, arr.length))
+  }
+
+  // Track mentor mode visit count
+  const getMentorVisitCount = () => {
+    if (currentDifficulty !== 'mentor') return 0
+    const count = parseInt(localStorage.getItem('mentor_visit_count') || '0', 10)
+    return count
+  }
+
+  const [mentorVisitCount] = useState(() => {
+    if (currentDifficulty === 'mentor' && !location.state?.resume) {
+      const prev = parseInt(localStorage.getItem('mentor_visit_count') || '0', 10)
+      const newCount = prev + 1
+      localStorage.setItem('mentor_visit_count', newCount.toString())
+      return newCount
+    }
+    return getMentorVisitCount()
+  })
+
+  // Select questions based on difficulty
+  const [quizQuestions] = useState(() => {
+    const getQuestions = () => {
+      switch (currentDifficulty) {
+        case 'medium':
+          return mediumQuestions.slice(0, Math.min(config.questionCount, mediumQuestions.length))
+        case 'hard':
+          return hardQuestions.slice(0, Math.min(config.questionCount, hardQuestions.length))
+        case 'leader':
+          return leaderModeQuestions.slice(0, Math.min(config.questionCount, leaderModeQuestions.length))
+        case 'mentor': {
+          let selected
+          if (mentorVisitCount >= 3) {
+            // Third time onward: 60% hard (18), 20% easy (6), 20% medium (6)
+            selected = [
+              ...pickRandom(easyQuestions, 6),
+              ...pickRandom(mediumQuestions, 6),
+              ...pickRandom(hardQuestions, 18)
+            ]
+          } else {
+            // First and second time: 10 random from each
+            selected = [
+              ...pickRandom(easyQuestions, 10),
+              ...pickRandom(mediumQuestions, 10),
+              ...pickRandom(hardQuestions, 10)
+            ]
+          }
+          // Third time onward: randomize the order of all questions
+          if (mentorVisitCount >= 3) {
+            return shuffleArray(selected)
+          }
+          return selected
+        }
+        case 'easy':
+        default:
+          return easyQuestions.slice(0, Math.min(config.questionCount, easyQuestions.length))
+      }
+    }
+
+    // If resuming, try to load saved questions
+    if (location.state?.resume) {
+      const saved = localStorage.getItem(`quiz_questions_${currentDifficulty}`)
+      if (saved) return JSON.parse(saved)
+    }
+
+    const questions = getQuestions()
+
+    // Save mentor questions so they persist on resume
+    if (currentDifficulty === 'mentor') {
+      localStorage.setItem(`quiz_questions_${currentDifficulty}`, JSON.stringify(questions))
+    }
+
+    return questions
+  })
 
   // Check if resuming
   const shouldResume = location.state?.resume
@@ -103,13 +186,7 @@ const Quiz = ({ userName, onLogout }) => {
 
   // Timer effect
   useEffect(() => {
-    if (result || lock) return; 
-    
-    if (timeLeft <= 0) {
-      // Time's up move to next question
-      handleNext();
-      return;
-    }
+    if (result || lock || timeLeft <= 0) return;
 
     const timer = setInterval(() => {
       setTimeLeft(prev => prev - 1);
@@ -117,11 +194,6 @@ const Quiz = ({ userName, onLogout }) => {
 
     return () => clearInterval(timer);
   }, [timeLeft, result, lock]);
-
-  // Reset timer when moving to next question
-  useEffect(() => {
-    setTimeLeft(config.timePerQuestion);
-  }, [index]);
 
   // Debug logging
   console.log('Quiz Debug:', { 
@@ -282,6 +354,7 @@ const Quiz = ({ userName, onLogout }) => {
       setResult(true)
       // Clear saved progress when quiz is complete
       localStorage.removeItem(`quiz_progress_${currentDifficulty}`)
+      localStorage.removeItem(`quiz_questions_${currentDifficulty}`)
       // Save score to backend
       saveScore(finalScore);
       return
@@ -290,6 +363,7 @@ const Quiz = ({ userName, onLogout }) => {
     setRevealed([])
     setSelectedOpt(null)
     setSelectedCorrect(null)
+    setTimeLeft(config.timePerQuestion)
   }
 
   // restart quiz
@@ -302,8 +376,9 @@ const Quiz = ({ userName, onLogout }) => {
     setResult(false)
     setLock(false)
     setTimeLeft(config.timePerQuestion)
-    // Clear saved progress on restart
+    // Clear saved progress and questions on restart
     localStorage.removeItem(`quiz_progress_${currentDifficulty}`)
+    localStorage.removeItem(`quiz_questions_${currentDifficulty}`)
   }
 
   const correctOpt = getCorrectOption()

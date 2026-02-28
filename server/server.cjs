@@ -11,6 +11,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended:true}))
 
+const LEADER_USER_IDS = [
+  'Joshua',
+  'Taiwo',
+  'Taiwo Sowole',
+  'Amarachi',
+  'Abigail',
+  'Munashe',
+  'Abena',
+  'Kenny',
+  'Ella',
+  'Yoyin'
+];
+
 const Db = process.env.ATLAS_URI;
 const client = new MongoClient(Db);
 
@@ -45,11 +58,33 @@ async function initializeUsers() {
     const hashedPassword2 = await bcrypt.hash('quiz2025', 10);
     const hashedPassword3 = await bcrypt.hash('birmingham', 10);
 
+    // Hash passwords for new users
+    const hashedJoshua = await bcrypt.hash('josh@392', 10);
+    const hashedTaiwo = await bcrypt.hash('taiwo#71', 10);
+    const hashedTaiwoS = await bcrypt.hash('sowole!85', 10);
+    const hashedAmarachi = await bcrypt.hash('amara$46', 10);
+    const hashedAbigail = await bcrypt.hash('abby&219', 10);
+    const hashedMunashe = await bcrypt.hash('muna^503', 10);
+    const hashedAbena = await bcrypt.hash('abena*67', 10);
+    const hashedKenny = await bcrypt.hash('kenny%38', 10);
+    const hashedElla = await bcrypt.hash('ella!924', 10);
+    const hashedYoyin = await bcrypt.hash('yoyin#15', 10);
+
     // Insert sample users
     await usersCollection.insertMany([
-      { userId: 'user1', password: hashedPassword1  },
-      { userId: 'user2', password: hashedPassword2  },
-      { userId: 'admin', password: hashedPassword3  },
+      { userId: 'user1', password: hashedPassword1, role: 'member' },
+      { userId: 'user2', password: hashedPassword2, role: 'member' },
+      { userId: 'admin', password: hashedPassword3, role: 'member' },
+      { userId: 'Joshua', password: hashedJoshua, role: 'leader' },
+      { userId: 'Taiwo', password: hashedTaiwo, role: 'leader' },
+      { userId: 'Taiwo Sowole', password: hashedTaiwoS, role: 'leader' },
+      { userId: 'Amarachi', password: hashedAmarachi, role: 'leader' },
+      { userId: 'Abigail', password: hashedAbigail, role: 'leader' },
+      { userId: 'Munashe', password: hashedMunashe, role: 'leader' },
+      { userId: 'Abena', password: hashedAbena, role: 'leader' },
+      { userId: 'Kenny', password: hashedKenny, role: 'leader' },
+      { userId: 'Ella', password: hashedElla, role: 'leader' },
+      { userId: 'Yoyin', password: hashedYoyin, role: 'leader' },
     ]);
 
     console.log('Sample users initialized');
@@ -82,7 +117,9 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ success: false, message: 'Invalid user ID or password' });
     }
 
-    res.json({ success: true, message: 'Login successful', userId: user.userId });
+    const role = user.role || (LEADER_USER_IDS.includes(user.userId) ? 'leader' : 'member');
+
+    res.json({ success: true, message: 'Login successful', userId: user.userId, role });
   } catch (e) {
     console.error('Login error:', e);
     res.status(500).json({ success: false, message: 'Server error' });

@@ -1,8 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-export default function DifficultySelection({ userName }) {
+export default function DifficultySelection({ userName, userRole }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const role = userRole || location.state?.userRole || 'member';
+  const leaderAllowedModes = ['leader', 'hard', 'mentor'];
+  const isLeader = role === 'leader';
 
   const difficulties = [
     {
@@ -28,10 +32,35 @@ export default function DifficultySelection({ userName }) {
       color: 'from-red-500 to-red-600',
       hoverColor: 'hover:from-red-600 hover:to-red-700',
       icon: '🔥'
+    },
+    {
+      id: 'leader',
+      title: 'Leader',
+      description: '15 questions • 15 seconds each',
+      color: 'from-indigo-500 to-indigo-600',
+      hoverColor: 'hover:from-indigo-600 hover:to-indigo-700',
+      icon: '👑'
+    },
+    {
+      id: 'mentor',
+      title: 'Mentor',
+      description: '30 questions • 10 seconds each',
+      color: 'from-purple-500 to-purple-600',
+      hoverColor: 'hover:from-purple-600 hover:to-purple-700',
+      icon: '🧠'
     }
   ];
 
+  const availableDifficulties = isLeader
+    ? difficulties.filter((diff) => leaderAllowedModes.includes(diff.id))
+    : difficulties;
+
   const handleDifficultySelect = (difficulty) => {
+    if (isLeader && !leaderAllowedModes.includes(difficulty)) {
+      alert('Leader accounts can only access Leader, Hard, and Mentor modes.');
+      return;
+    }
+
     // Check if there's a saved quiz progress for this difficulty
     const savedProgress = localStorage.getItem(`quiz_progress_${difficulty}`);
     
@@ -61,8 +90,8 @@ export default function DifficultySelection({ userName }) {
       </div>
 
       {/* Difficulty Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full mb-8">
-        {difficulties.map((diff) => (
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 max-w-6xl w-full mb-8">
+        {availableDifficulties.map((diff) => (
           <button
             key={diff.id}
             onClick={() => handleDifficultySelect(diff.id)}

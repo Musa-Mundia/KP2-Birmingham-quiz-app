@@ -1,0 +1,18 @@
+KP2 Birmingham Quiz App - Users & Passwords
+=============================================
+
+User ID              Password
+-------              --------
+user1                password123
+user2                quiz2025
+admin                birmingham
+Joshua               josh@392
+Taiwo                taiwo#71
+Taiwo Sowole         sowole!85
+Amarachi             amara$46
+Abigail              abby&219
+Munashe              muna^503
+Abena                abena*67
+Kenny                kenny%38
+Ella                 ella!924
+Yoyin                yoyin#15
