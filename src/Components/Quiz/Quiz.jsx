@@ -15,6 +15,7 @@ const Quiz = ({ userName, userRole, onLogout }) => {
   const { difficulty } = useParams()
   const location = useLocation()
   const role = userRole || location.state?.userRole || 'member'
+  const isLeader = role.toLowerCase() === 'leader'
   const leaderAllowedModes = ['leader', 'hard', 'mentor']
 
   // Difficulty configurations
@@ -30,10 +31,10 @@ const Quiz = ({ userName, userRole, onLogout }) => {
   const currentDifficulty = difficulty || 'easy'
 
   useEffect(() => {
-    if (role === 'leader' && !leaderAllowedModes.includes(currentDifficulty)) {
+    if (isLeader && !leaderAllowedModes.includes(currentDifficulty)) {
       navigate('/difficulty')
     }
-  }, [role, currentDifficulty, navigate])
+  }, [isLeader, currentDifficulty, navigate])
 
   // Shuffle helper: returns a new array with elements in random order
   const shuffleArray = (arr) => {
@@ -58,7 +59,7 @@ const Quiz = ({ userName, userRole, onLogout }) => {
   }
 
   const [mentorVisitCount] = useState(() => {
-    if (currentDifficulty === 'mentor' && !location.state?.resume) {
+    if (currentDifficulty === 'mentor' && !(location.state?.resume && !isLeader)) {
       const prev = parseInt(localStorage.getItem('mentor_visit_count') || '0', 10)
       const newCount = prev + 1
       localStorage.setItem('mentor_visit_count', newCount.toString())
@@ -107,7 +108,7 @@ const Quiz = ({ userName, userRole, onLogout }) => {
     }
 
     // If resuming, try to load saved questions
-    if (location.state?.resume) {
+    if (location.state?.resume && !isLeader) {
       const saved = localStorage.getItem(`quiz_questions_${currentDifficulty}`)
       if (saved) return JSON.parse(saved)
     }
@@ -123,7 +124,7 @@ const Quiz = ({ userName, userRole, onLogout }) => {
   })
 
   // Check if resuming
-  const shouldResume = location.state?.resume
+  const shouldResume = location.state?.resume && !isLeader
 
   // Load saved progress or start fresh
   const loadInitialState = () => {

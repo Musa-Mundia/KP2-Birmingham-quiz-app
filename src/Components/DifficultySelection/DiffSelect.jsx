@@ -6,7 +6,7 @@ export default function DifficultySelection({ userName, userRole }) {
   const location = useLocation();
   const role = userRole || location.state?.userRole || 'member';
   const leaderAllowedModes = ['leader', 'hard', 'mentor'];
-  const isLeader = role === 'leader';
+  const isLeader = role.toLowerCase() === 'leader';
 
   const difficulties = [
     {
@@ -63,8 +63,8 @@ export default function DifficultySelection({ userName, userRole }) {
 
     // Check if there's a saved quiz progress for this difficulty
     const savedProgress = localStorage.getItem(`quiz_progress_${difficulty}`);
-    
-    if (savedProgress) {// Resume quiz or start new
+
+    if (savedProgress && !isLeader) { // Resume quiz or start new
       
       const resume = window.confirm(
         'You have an unfinished quiz. Would you like to resume? Click OK to resume or Cancel to start fresh.'
@@ -78,6 +78,11 @@ export default function DifficultySelection({ userName, userRole }) {
         navigate(`/quiz/${difficulty}`, { state: { resume: false } });
       }
     } else {
+      if (isLeader) {
+        // Leaders should always start fresh and never resume.
+        localStorage.removeItem(`quiz_progress_${difficulty}`);
+        localStorage.removeItem(`quiz_questions_${difficulty}`);
+      }
       navigate(`/quiz/${difficulty}`, { state: { resume: false } });
     }
   };
@@ -102,7 +107,7 @@ export default function DifficultySelection({ userName, userRole }) {
             <p className="text-lg opacity-90">{diff.description}</p>
             
             {/* Show "Resume Available" badge if there's saved progress */}
-            {localStorage.getItem(`quiz_progress_${diff.id}`) && (
+            {!isLeader && localStorage.getItem(`quiz_progress_${diff.id}`) && (
               <div className="mt-4 bg-black bg-opacity-20 rounded-full px-4 py-2 text-sm font-semibold">
                 📌 Resume Available
               </div>
