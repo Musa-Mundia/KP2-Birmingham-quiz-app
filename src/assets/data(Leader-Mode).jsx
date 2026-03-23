@@ -151,6 +151,33 @@ export const leaderModeQuestions = [
     option3: "C. Pentateuch, Historical, Wisdom",
     option4: "D. Genesis, Exodus, Leviticus",
     answer: "A"
+  },
+  {
+    id: 18,
+    text: "According to 1 Timothy 3, what must an overseer be?",
+    option1: "A. Wealthy and influential",
+    option2: "B. Above reproach and self-controlled",
+    option3: "C. A skilled orator",
+    option4: "D. Of noble birth",
+    answer: "B"
+  },
+  {
+    id: 19,
+    text: "What quality does Proverbs 11:14 say brings safety to a nation?",
+    option1: "A. Military strength",
+    option2: "B. Abundance of counsellors",
+    option3: "C. Wealth and prosperity",
+    option4: "D. Strict laws",
+    answer: "B"
+  },
+  {
+    id: 20,
+    text: "In John 13, what act did Jesus perform to teach servant leadership?",
+    option1: "A. He cooked a meal for his disciples",
+    option2: "B. He washed his disciples' feet",
+    option3: "C. He carried their belongings",
+    option4: "D. He built them a shelter",
+    answer: "B"
   }
 ]
 

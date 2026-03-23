@@ -20,7 +20,7 @@ export default function DifficultySelection({ userName, userRole }) {
     {
       id: 'medium',
       title: 'Medium',
-      description: '20 questions • 20 seconds each',
+      description: '25 questions • 20 seconds each',
       color: 'from-yellow-500 to-yellow-600',
       hoverColor: 'hover:from-yellow-600 hover:to-yellow-700',
       icon: '🤔'
@@ -36,7 +36,7 @@ export default function DifficultySelection({ userName, userRole }) {
     {
       id: 'leader',
       title: 'Leader',
-      description: '17 questions • 15 seconds each',
+      description: '20 questions • 15 seconds each',
       color: 'from-indigo-500 to-indigo-600',
       hoverColor: 'hover:from-indigo-600 hover:to-indigo-700',
       icon: '👑'
