@@ -22,8 +22,8 @@ const Quiz = ({ userName, userRole, onLogout }) => {
   const difficultyConfig = {
     easy: { questionCount: 20, timePerQuestion: 25 },
     medium: { questionCount: 20, timePerQuestion: 20 },
-    hard: { questionCount: 20, timePerQuestion: 15 },
-    leader: { questionCount: 15, timePerQuestion: 15 },
+    hard: { questionCount: 22, timePerQuestion: 15 },
+    leader: { questionCount: 17, timePerQuestion: 15 },
     mentor: { questionCount: 30, timePerQuestion: 10 }
   }
 

@@ -133,6 +133,24 @@ export const leaderModeQuestions = [
     option3: "C. Join the discussion",
     option4: "D. Leave the group",
     answer: "B"
+  },
+  {
+    id: 16,
+    text: "What are the 3 sections of the Old Testament?",
+    option1: "A. Law, Prophets, Writings",
+    option2: "B. Gospels, Epistles, Revelation",
+    option3: "C. Pentateuch, Historical, Wisdom",
+    option4: "D. Genesis, Exodus, Leviticus",
+    answer: "A"
+  },
+  {
+    id: 17,
+    text: "What are the 3 sections of the New Testament?",
+    option1: "A. Gospels, Epistles, Apocalypse",
+    option2: "B. Law, Prophets, Writings",
+    option3: "C. Pentateuch, Historical, Wisdom",
+    option4: "D. Genesis, Exodus, Leviticus",
+    answer: "A"
   }
 ]
 
