@@ -251,5 +251,27 @@ export const mediumQuestions = [
       "Anglican"
     ],
     correctAnswer: "Protestant / Charismatic"
+  },
+  {
+    id: 41,
+    question: "What are the 3 sections of the Old Testament?",
+    options: [
+      "Law, Prophets, Writings",
+      "Gospels, Epistles, Revelation",
+      "Pentateuch, Historical, Wisdom",
+      "Genesis, Exodus, Leviticus"
+    ],
+    correctAnswer: "Law, Prophets, Writings"
+  },
+   {
+    id: 42,
+    question: "What are the 3 sections of the New Testament?",
+    options: [
+      "Gospels, Epistles, Apocalypse",
+      "Law, Prophets, Writings",
+      "Pentateuch, Historical, Wisdom",
+      "Genesis, Exodus, Leviticus"
+    ],
+    correctAnswer: "Gospels, Epistles, Apocalypse"
   }
 ];
