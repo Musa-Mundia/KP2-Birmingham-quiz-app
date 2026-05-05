@@ -5,8 +5,11 @@ export default function DifficultySelection({ userName, userRole }) {
   const navigate = useNavigate();
   const location = useLocation();
   const role = userRole || location.state?.userRole || 'member';
-  const leaderAllowedModes = ['leader', 'hard', 'mentor'];
+  const memberAllowedModes = ['easy', 'medium', 'hard'];
+  const restrictedAllowedModes = ['hard', 'leader', 'mentor'];
   const isLeader = role.toLowerCase() === 'leader';
+  const isMentor = role.toLowerCase() === 'mentor';
+  const isRestricted = isLeader || isMentor;
 
   const difficulties = [
     {
@@ -51,16 +54,11 @@ export default function DifficultySelection({ userName, userRole }) {
     }
   ];
 
-  const availableDifficulties = isLeader
-    ? difficulties.filter((diff) => leaderAllowedModes.includes(diff.id))
-    : difficulties;
+  const availableDifficulties = isRestricted
+    ? difficulties.filter((diff) => restrictedAllowedModes.includes(diff.id))
+    : difficulties.filter((diff) => memberAllowedModes.includes(diff.id));
 
   const handleDifficultySelect = (difficulty) => {
-    if (isLeader && !leaderAllowedModes.includes(difficulty)) {
-      alert('Leader accounts can only access Leader, Hard, and Mentor modes.');
-      return;
-    }
-
     // Check if there's a saved quiz progress for this difficulty
     const savedProgress = localStorage.getItem(`quiz_progress_${difficulty}`);
 
