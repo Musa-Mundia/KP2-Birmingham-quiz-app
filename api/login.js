@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     }
 
     // Successful login
-    res.json({ success: true, message: 'Login successful', userId: user.userId });
+    res.json({ success: true, message: 'Login successful', userId: user.userId, role: user.role });
   } catch (e) {
     console.error('Login error:', e);
     res.status(500).json({ success: false, message: 'Server error' });
